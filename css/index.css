@@ -1,0 +1,14 @@
+table, th, td {
+  border: 1px;
+  width: 200px;
+}
+#data {
+  width: 220px;
+  height: 140px;
+}
+body {
+	margin-left: 100px;
+}
+.prompt {
+	color: red;
+}

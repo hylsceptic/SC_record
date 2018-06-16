@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+  <html>
+    <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <link rel="stylesheet" type="text/css" href="./css/index.css">
+    </head>
+    <h2>说明</h2>
+    <p>本项目提供在以太坊智能合约上记录数据服务。所记录数据将永远不可删除，不可更改。可随时查询。</p>
+    <h2>Register:</h2>
+    <p>为方便记入数据以及查询数据，每个人首先请注册用户，信息完全存储在智能合约上。</p>
+    <h3 id="warning"></h3>
+    <body>
+        User name: <input id="username1" type="text" name="UserName" value="">
+        Password:  <input id="password1" type="text" name="Password" value="">
+        Reenter :  <input id="password1r" type="text" name="Password" value=""><br/>
+        <p id="registerresult" class="prompt"></p>
+        <button id="register">Register</button><br>
+
+        <h2>Write data:</h2>
+        <p>写入数据，请提供用户名，密码，数据名以及数据内容。</p>
+        User name: <input id="username2" type="text" name="UserName" value="">
+        Password:  <input id="password2" type="text" name="Password" value="">
+        Data name: <input id="name2" type="text" name="Password" value=""><br/>
+        Data: <br>
+        <textarea id="data" rows="6" cols="40"></textarea><br/>
+        <p id="writeresult" class="prompt"></p>
+        <button id="write">Write</button><br>
+
+        <h2>Read data:</h2>
+        <p>请提供用户名以及数据名查询所记入数据。</p>
+        User name: <input id="username3" type="text" name="UserName" value="">
+        Data name: <input id="name3" type="text" name="Password" value=""><br/>
+        <div id="resultdata"></div>
+        <p id="readresult" class="prompt"></p>
+        <button id="read">Read</button><br><br>
+        <h3>注意：</h3>
+        <p>目前该项目处于测试阶段，合约部署在Ropsten testnet上，请先安装metamask,并切换到Ropsten testnet。</p>
+    </body>
+    <!-- <script src="./js/ethereumjs-util.js"></script> -->
+     <script src="./web3/bundle.js"></script>
+    <script type="text/javascript" src="./js/abi.json"></script>
+    <script src="./js/web3.min.js"></script>
+    <script src="./js/script.js"></script>
+
+  </html>
