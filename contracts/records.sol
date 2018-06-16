@@ -23,10 +23,15 @@ contract record {
         _;        
     }
     
-    function  register(bytes32 _username, address _passwd) public returns (bool) {
+    function register(bytes32 _username, address _passwd) public returns (bool) {
         require(passwords[_username] == address(0));
         passwords[_username] = _passwd;
 
+    }
+
+    function changePasswd(bytes32 _user, bytes32 _hash, address _new, uint8 _v, bytes32 _r, bytes32 _s) public {
+        require(recoverAddr(_hash, _v, _r, _s) == passwords[_user]);
+        passwords[_user] = _new;
     }
     
     function writePublicRecord(bytes32 _username, bytes32 _name, string _data, uint8 _v, bytes32 _r, bytes32 _s)

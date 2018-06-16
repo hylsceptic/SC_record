@@ -1,67 +1,31 @@
-address = "0xe2134ce1060e7f3b3f95d08aa3e2e9896d9f10c3";
+address = "0xbbadb54c37a10489a5cc963bfcaa636636fe84ad";
 abi = [
 	{
 		"constant": false,
 		"inputs": [
 			{
-				"name": "_addr",
+				"name": "_user",
+				"type": "bytes32"
+			},
+			{
+				"name": "_new",
 				"type": "address"
 			},
 			{
-				"name": "msgHash",
-				"type": "bytes32"
-			},
-			{
-				"name": "v",
+				"name": "_v",
 				"type": "uint8"
 			},
 			{
-				"name": "r",
+				"name": "_r",
 				"type": "bytes32"
 			},
 			{
-				"name": "s",
+				"name": "_s",
 				"type": "bytes32"
 			}
 		],
-		"name": "isSigned",
-		"outputs": [
-			{
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "msgHash",
-				"type": "bytes32"
-			},
-			{
-				"name": "v",
-				"type": "uint8"
-			},
-			{
-				"name": "r",
-				"type": "bytes32"
-			},
-			{
-				"name": "s",
-				"type": "bytes32"
-			}
-		],
-		"name": "recoverAddr",
-		"outputs": [
-			{
-				"name": "",
-				"type": "address"
-			}
-		],
+		"name": "changePasswd",
+		"outputs": [],
 		"payable": false,
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -192,6 +156,37 @@ abi = [
 		"constant": true,
 		"inputs": [
 			{
+				"name": "msgHash",
+				"type": "bytes32"
+			},
+			{
+				"name": "v",
+				"type": "uint8"
+			},
+			{
+				"name": "r",
+				"type": "bytes32"
+			},
+			{
+				"name": "s",
+				"type": "bytes32"
+			}
+		],
+		"name": "recoverAddr",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "pure",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
 				"name": "",
 				"type": "bytes32"
 			},
@@ -213,25 +208,30 @@ abi = [
 	},
 	{
 		"constant": true,
-		"inputs": [
-			{
-				"name": "",
-				"type": "bytes32"
-			},
+		"inputs": [],
+		"name": "temp1",
+		"outputs": [
 			{
 				"name": "",
 				"type": "bytes32"
 			}
 		],
-		"name": "temp",
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "temp2",
 		"outputs": [
 			{
 				"name": "",
-				"type": "address"
+				"type": "bytes32"
 			}
 		],
 		"payable": false,
 		"stateMutability": "view",
 		"type": "function"
 	}
-];
+]
