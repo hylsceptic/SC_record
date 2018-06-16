@@ -5,9 +5,9 @@ contract record {
     mapping (bytes32 => mapping (bytes32 => string)) public records;
     mapping (bytes32 => mapping (bytes32 => bool)) public sigs;
     mapping (bytes32 => address) public passwords;
-    
 
-    function recoverAddr(bytes32 msgHash, uint8 v, bytes32 r, bytes32 s) public returns (address) {
+
+    function recoverAddr(bytes32 msgHash, uint8 v, bytes32 r, bytes32 s) public pure returns (address) {
         bytes memory prefix = "\x19Ethereum Signed Message:\n32";
         bytes32 prefixedHash = keccak256(prefix, msgHash);
         return ecrecover(prefixedHash, v, r, s);
@@ -29,8 +29,9 @@ contract record {
 
     }
 
-    function changePasswd(bytes32 _user, bytes32 _hash, address _new, uint8 _v, bytes32 _r, bytes32 _s) public {
-        require(recoverAddr(_hash, _v, _r, _s) == passwords[_user]);
+    function changePasswd(bytes32 _user, address _new, uint8 _v, bytes32 _r, bytes32 _s) public {
+        bytes32 hash = keccak256(_new);
+        require(recoverAddr(hash, _v, _r, _s) == passwords[_user]);
         passwords[_user] = _new;
     }
     
