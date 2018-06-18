@@ -11,45 +11,20 @@
         <a href="data.html" class="Item">存储数据</a>
       </ul>
       <div class="body-main">
-        <h2>说明</h2>
+        <h2>说明：</h2>
         <p>本项目提供在以太坊智能合约上记录数据服务。所记录数据将永远不可删除，不可更改。可随时查询。</p>
-        <h2>Register:</h2>
-        <p>为方便记入数据以及查询数据，每个人首先请注册用户，信息完全存储在智能合约上。</p>
-        <h3 id="warning"></h3>
-        User name: <input id="username1" type="text" name="UserName" value="" placeholder="Enter user name">
-        Password:  <input id="password1" type="password" name="Password" value="" placeholder="Enter password">
-        Reenter :  <input id="password1r" type="password" name="Password" value="" placeholder="Repeat password"><br/>
-        <p id="registerresult" class="prompt"></p>
-        <button id="register">Register</button><br>
-        
-        <h2>Change passward:</h2>
-        <h3 id="warning"></h3>
-        User name: <input id="cun1" type="text" name="UserName" value="" placeholder="Enter user name">
-        Old password:  <input id="cpw1" type="password" name="Password" value="" placeholder="Enter old password">
-        New password:  <input id="cpw2" type="password" name="Password" value="" placeholder="Enter new password">
-        Reenter :  <input id="cpw3" type="password" name="Password" value="" placeholder="Repeat password"><br/>
-        <p id="cgpwdresult" class="prompt"></p>
-        <button id="cgpwd">Submit</button><br>
 
-        <h2>Write data:</h2>
-        <p>写入数据，请提供用户名，密码，数据名以及数据内容。</p>
-        User name: <input id="username2" type="text" name="UserName" value="" placeholder="Enter user name">
-        Password:  <input id="password2" type="password" name="Password" value="" placeholder="Enter password">
-        Data name: <input id="name2" type="text" name="Password" value="" placeholder="Enter data name"><br/>
-        Data: <br>
-        <textarea id="data" rows="6" cols="40"></textarea><br/>
-        <p id="writeresult" class="prompt"></p>
-        <button id="write">Write</button><br>
+        <h2>注意：</h2>
+        <p>目前该项目处于测试阶段，合约部署在Ropsten testnet上，请先安装metamask,并切连接到测试网络http://116.62.151.218:8545。</p>
 
-        <h2>Read data:</h2>
-        <p>请提供用户名以及数据名查询所记入数据。</p>
-        User name: <input id="username3" type="text" name="UserName" value="" placeholder="Enter user name">
-        Data name: <input id="name3" type="text" name="Password" value="" placeholder="Enter password"><br/>
-        <div id="resultdata"></div>
-        <p id="readresult" class="prompt"></p>
-        <button id="read">Read</button><br><br>
-        <h3>注意：</h3>
-        <p>目前该项目处于测试阶段，合约部署在Ropsten testnet上，请先安装metamask,并切换到Ropsten testnet。</p>
+        <p>在智能合约上注册用户或修改密码，请前往用户信息。</p>
+        <p>在智能合约上记录数据或读取，请前往存储数据。</p>
+
+
+
+        <h4>获得测试eth：</h4>
+        <button id="sendeth">Click Me</button>
+        <p id="sendResult"></p>
       </div>
     </body>
     <!-- <script src="./js/ethereumjs-util.js"></script> -->
