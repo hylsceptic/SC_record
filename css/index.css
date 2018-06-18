@@ -7,8 +7,29 @@ table, th, td {
   height: 140px;
 }
 body {
-	margin-left: 100px;
+	margin: 0px;
 }
 .prompt {
 	color: red;
+}
+
+#Manu {
+	background-color: lightgrey;
+	margin-top: 0px;
+	margin-bottom: 10px;
+	display: block;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.Item {
+	color: blue;
+	text-decoration: blink;
+	margin-left: 50px;
+	font-size: 25px;
+	font-family: SimHei;
+}
+
+.body-main {
+	margin-left: 100px;
 }
