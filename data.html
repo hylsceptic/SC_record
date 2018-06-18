@@ -28,6 +28,25 @@
         <div id="resultdata"></div>
         <p id="readresult" class="prompt"></p>
         <button id="read">Read</button><br><br>
+
+        <h2>Confirm data:</h2>
+        <p>请提供您的用户名与密码，以及您想要确认的用户及数据。</p>
+        Your name: <input id="comfirmer" type="text" name="UserName" value="" placeholder="Enter user name">
+        Your password: <input id="comfirmer-passwd" type="password" name="Password" value="" placeholder="Enter password">
+        User name: <input id="drafter" type="text" name="UserName" value="" placeholder="Enter user name">
+        Data name: <input id="comfirm-dataName" type="text" name="Password" value="" placeholder="Enter data name"><br/>
+        <p id="comfirmresult" class="prompt"></p>
+        <button id="comfirm">Comfirm</button><br><br>
+
+        <h2>Witness data:</h2>
+        <p>请提供您的用户名与密码，以及您想要确认的用户及数据及确认人。</p>
+        Your name: <input id="eyewitness" type="text" name="UserName" value="" placeholder="Enter user name">
+        Your password: <input id="eyewitness-passwd" type="password" name="Password" value="" placeholder="Enter password">
+        User name: <input id="drafterofwitness" type="text" name="UserName" value="" placeholder="Enter user name">
+        Data name: <input id="eyewitness-dataName" type="text" name="Password" value="" placeholder="Enter  data name">
+        Confirmer: <input id="confirmerofwitness" type="text" name="Password" value="" placeholder="Enter confirmer"><br/>
+        <p id="witnessresult" class="prompt"></p>
+        <button id="witness">Comfirm</button><br><br>
         <h3>注意：</h3>
         <p>目前该项目处于测试阶段，合约部署在Ropsten testnet上，请先安装metamask,并切换到Ropsten testnet。</p>
       </div>
@@ -35,6 +54,6 @@
     <!-- <script src="./js/ethereumjs-util.js"></script> -->
     <script type="text/javascript" src="./js/abi.json"></script>
     <script src="./js/web3.min.js"></script>
-    <script src="./js/script.js"></script>
+    <script src="./js/data.js"></script>
 
   </html>

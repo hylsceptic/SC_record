@@ -32,7 +32,11 @@ signature2 = sign(dataNameHash, pk2);
 // changePasswd(userHash, account2, signature1)
 // writePublicRecord(userHash, dataNameHash, data, signature2)
 // readPublicRecord(userHash, dataNameHash)
-
+// myContract.methods.passwords(web3.utils.sha3('1')).call().then(console.log)
+// myContract.methods.confirmation(web3.utils.sha3('test2'), web3.utils.sha3('test1'), web3.utils.sha3('1223')).call().then(console.log)
+myContract.methods.witnesses(web3.utils.sha3('test3'), web3.utils.sha3('test4'), web3.utils.sha3('test1'), web3.utils.sha3('123')).call().then(console.log)
+// myContract.methods.a1().call().then(console.log)
+// myContract.methods.a2().call().then(console.log)
 
 function sign(msg, pk) {
 	let Signature = web3.eth.accounts.sign(msg, pk)

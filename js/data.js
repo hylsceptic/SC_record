@@ -30,71 +30,6 @@ window.addEventListener('load', function() {
 	myContract = new web3.eth.Contract(abi, address);
 })
 
-document.getElementById("register").onclick = function search() {
-	// console.log(123);
-	// console.log(test);
-	var text = document.getElementById("registerresult");
-	var username = document.getElementById("username1").value;
-	var password = document.getElementById("password1").value;
-	var password1 = document.getElementById("password1r").value;
-	if(password != password1) {
-		text.innerHTML = "密码不一致...";
-		return 0
-	}
-	pk = web3.utils.sha3(password);
-	userNameHash = web3.utils.sha3(username);
-	accounts = web3.eth.accounts.privateKeyToAccount(pk);
-	console.log(userNameHash);
-	text.innerHTML = "等待转账确认..."
-	myContract.methods.register(userNameHash, accounts.address).send({from: account})
-	.on('receipt', function(receipt) {
-		text.innerHTML = "注册成功。"
-	})
-	.on('error', function(error) {
-		text.innerHTML = "注册失败，用户名是否已注册。"
-	});
-}
-
-document.getElementById("cgpwd").onclick = function search() {
-	// console.log(123);
-	// console.log(test);
-	var text = document.getElementById("cgpwdresult");
-	var username = document.getElementById("cun1").value;
-	var oldPassword = document.getElementById("cpw1").value;
-	var newPassword1 = document.getElementById("cpw2").value;
-	var newPassword2 = document.getElementById("cpw3").value;
-	if(newPassword1 != newPassword2) {
-		text.innerHTML = "新密码不一致...";
-		return 0
-	}
-	userNameHash = web3.utils.sha3(username);
-	pk = web3.utils.sha3(newPassword1);
-	accounts = web3.eth.accounts.privateKeyToAccount(pk);
-	address = accounts.address
-	// console.log(passwdHash);
-	var addressHash = web3.utils.sha3(address);
-	Signature = web3.eth.accounts.sign(addressHash.toString('hex'), web3.utils.sha3(oldPassword))
-	console.log(addressHash, addressHash.toString('hex'))
-
-	signature = Signature.signature.substr(2); //remove 0x
-	const r = '0x' + signature.slice(0, 64);
-	const s = '0x' + signature.slice(64, 128);
-	const v = '0x' + signature.slice(128, 130);
-	const v_decimal = web3.utils.toDecimal(v);
-
-
-	text.innerHTML = "等待转账确认..."
-	myContract.methods.changePasswd(userNameHash, address, v, r, s).send({from: account})
-	.on('receipt', function(receipt) {
-		text.innerHTML = "修改成功。"
-	})
-	.on('error', function(error) {
-		text.innerHTML = "修改失败。"
-	});
-}
-
-
-
 document.getElementById("write").onclick = function search() {
  
 	var username = document.getElementById("username2").value;
@@ -132,16 +67,45 @@ document.getElementById("comfirm").onclick = function search() {
 	var comfirmer = document.getElementById("comfirmer").value;
 	var comfirmerNameHash = web3.utils.sha3(comfirmer);
 	var passwd = document.getElementById("comfirmer-passwd").value;
-	var text = document.getElementById("resultdata");
+	var text = document.getElementById("comfirmresult");
 	var drafter = document.getElementById("drafter").value;
 	var drafterNameHash = web3.utils.sha3(drafter);
-	var dataName = document.getElementById("comfirm-datName").value;
+	var dataName = document.getElementById("comfirm-dataName").value;
 	var dataNameHash = web3.utils.sha3(dataName);
 
-	signature = sign(drafter + dataNameHash.substr(2), pk)
+
+	var pk = web3.utils.sha3(passwd);
+	signature = sign(web3.utils.sha3(drafterNameHash + dataNameHash.substr(2)), pk)
+	console.log(drafterNameHash, dataNameHash, drafterNameHash + dataNameHash.substr(2))
+	
+	myContract.methods.confirm(comfirmerNameHash, drafterNameHash, dataNameHash, signature.v, signature.r, signature.s)
+	.send({from: account})
+	.on('receipt', function(receipt){
+	    text.innerHTML = "数据确认成功。";
+	    })
+	.on('error', function(error) {text.innerHTML = "数据确认失败..."});
+}
+
+document.getElementById("witness").onclick = function search() {
+	var eyewitness = document.getElementById("eyewitness").value;
+	var eyewitnessNameHash = web3.utils.sha3(eyewitness);
+	var passwd = document.getElementById("eyewitness-passwd").value;
+	var drafter = document.getElementById("drafterofwitness").value;
+	var drafterNameHash = web3.utils.sha3(drafter);
+	var dataName = document.getElementById("eyewitness-dataName").value;
+	var dataNameHash = web3.utils.sha3(dataName);
+	var confirmer = document.getElementById("confirmerofwitness").value;
+	var confirmerNameHash = web3.utils.sha3(confirmer);
+	var text = document.getElementById("witnessresult");
 
 
-	myContract.methods.comfoirm(comfirmerNameHash, drafterNameHash, dataNameHash, signature.v, signature.r, signature.s)
+	var pk = web3.utils.sha3(passwd);
+	var msg = web3.utils.sha3(web3.utils.sha3(confirmerNameHash + drafterNameHash.substr(2)) + dataNameHash.substr(2));
+	signature = sign(msg, pk)
+	// console.log(drafterNameHash, dataNameHash, drafterNameHash + dataNameHash.substr(2))
+	
+	myContract.methods.witness(eyewitnessNameHash, confirmerNameHash, drafterNameHash, 
+		dataNameHash, signature.v, signature.r, signature.s)
 	.send({from: account})
 	.on('receipt', function(receipt){
 	    text.innerHTML = "数据确认成功。";
@@ -151,7 +115,7 @@ document.getElementById("comfirm").onclick = function search() {
 
 function writeData(userName, passwd, dataName, data) {
 	var userNameHash = web3.utils.sha3(userName);
-	pk = web3.utils.sha3(passwd);
+	var pk = web3.utils.sha3(passwd);
 	accounts = web3.eth.accounts.privateKeyToAccount(pk);
 
 	dataNameHash = web3.utils.sha3(dataName);
