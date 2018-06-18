@@ -39,29 +39,29 @@ document.getElementById("write").onclick = function search() {
 	writeData(username, password, name, data);
 }
 
-document.getElementById("read").onclick = function search() {
-	var username = document.getElementById("username3").value;
-	userNameHash = web3.utils.sha3(username);
-	var name = document.getElementById("name3").value;
-	nameHash = web3.utils.sha3(name);
-	var text = document.getElementById("resultdata");
-	myContract.methods.readPublicRecord(userNameHash, nameHash).call().then(
-		function(data) {
-		if(data=="") {
-			document.getElementById("readresult").innerHTML = "无此记录，请检查用户名以及数据名。";
-			document.getElementById("resultdata").innerHTML = "";
-		} else {
+// document.getElementById("read").onclick = function search() {
+// 	var username = document.getElementById("username3").value;
+// 	userNameHash = web3.utils.sha3(username);
+// 	var name = document.getElementById("name3").value;
+// 	nameHash = web3.utils.sha3(name);
+// 	var text = document.getElementById("resultdata");
+// 	myContract.methods.readPublicRecord(userNameHash, nameHash).call().then(
+// 		function(data) {
+// 		if(data=="") {
+// 			document.getElementById("readresult").innerHTML = "无此记录，请检查用户名以及数据名。";
+// 			document.getElementById("resultdata").innerHTML = "";
+// 		} else {
 
-			document.getElementById("readresult").innerHTML = "";
-			text.innerHTML = (`
-				<h5>Data in this record:</h5>
-				<textarea id="textdata" rows="4" cols="40">`
-				+ data +
-				`</textarea>
-				`);
-		}
-	})
-}
+// 			document.getElementById("readresult").innerHTML = "";
+// 			text.innerHTML = (`
+// 				<h5>Data in this record:</h5>
+// 				<textarea id="textdata" rows="4" cols="40">`
+// 				+ data +
+// 				`</textarea>
+// 				`);
+// 		}
+// 	})
+// }
 
 document.getElementById("comfirm").onclick = function search() {
 	var comfirmer = document.getElementById("comfirmer").value;
