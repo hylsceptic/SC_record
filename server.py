@@ -1,8 +1,6 @@
 import http.server 
 import socketserver
 import os
-PORT_NUMBER = 8080
-
 
 rootdir='D:/Projects/SC_record/'
 os.chdir(rootdir)

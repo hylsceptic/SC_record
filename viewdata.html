@@ -13,34 +13,32 @@
         <a href="visiter.html" class="Item">游客模式</a>
       </ul>
       <div class="body-main">
-        <h2>Write data:</h2>
-        <p>写入数据，请提供用户名，密码，数据名以及数据内容。</p>
-        User name: <input id="username2" type="text" name="UserName" value="" placeholder="Enter user name">
-        Password:  <input id="password2" type="password" name="Password" value="" placeholder="Enter password">
-        Data name: <input id="name2" type="text" name="Password" value="" placeholder="Enter data name"><br/>
-        Data: <br>
-        <textarea id="data" rows="6" cols="40"></textarea><br/>
-        <p id="writeresult" class="prompt"></p>
-        <button id="write">Write</button><br>
 
-        <h2>Confirm data:</h2>
-        <p>请提供您的用户名与密码，以及您想要确认的用户及数据。</p>
-        Your name: <input id="comfirmer" type="text" name="UserName" value="" placeholder="Enter user name">
-        Your password: <input id="comfirmer-passwd" type="password" name="Password" value="" placeholder="Enter password">
+        <h2>Read data:</h2>
+        <p>请提供用户名以及数据名查询所记入数据。</p>
+        User name: <input id="username3" type="text" name="UserName" value="" placeholder="Enter user name">
+        Data name: <input id="name3" type="text" name="Password" value="" placeholder="Enter password"><br/>
+        <div id="resultdata"></div>
+        <p id="readresult" class="prompt"></p>
+        <button id="read">Read</button><br>
+        <p id="sendResult"></p>
+
+        <h2>View confirm:</h2>
+        <p>请提供您想要查看的确认人，用户及数据。</p>
+        Confirmer name: <input id="comfirmer" type="text" name="UserName" value="" placeholder="Enter user name">
         User name: <input id="drafter" type="text" name="UserName" value="" placeholder="Enter user name">
         Data name: <input id="comfirm-dataName" type="text" name="Password" value="" placeholder="Enter data name"><br/>
         <p id="comfirmresult" class="prompt"></p>
-        <button id="comfirm">Comfirm</button><br>
+        <button id="comfirm">View comfirm</button><br>
 
-        <h2>Witness data:</h2>
-        <p>请提供您的用户名与密码，以及您想要确认的用户及数据及确认人。</p>
-        Your name: <input id="eyewitness" type="text" name="UserName" value="" placeholder="Enter user name">
-        Your password: <input id="eyewitness-passwd" type="password" name="Password" value="" placeholder="Enter password">
+        <h2>Wiew witness:</h2>
+        <p>请提供您想要查询的见证人，确认人，用户及数据。</p>
+        Eyewitness name: <input id="eyewitness" type="text" name="UserName" value="" placeholder="Enter user name">
+        Confirmer name: <input id="confirmerofwitness" type="text" name="Password" value="" placeholder="Enter confirmer"><br/>
         User name: <input id="drafterofwitness" type="text" name="UserName" value="" placeholder="Enter user name">
         Data name: <input id="eyewitness-dataName" type="text" name="Password" value="" placeholder="Enter  data name">
-        Confirmer: <input id="confirmerofwitness" type="text" name="Password" value="" placeholder="Enter confirmer"><br/>
         <p id="witnessresult" class="prompt"></p>
-        <button id="witness">Comfirm</button><br>
+        <button id="witness">Comfirm</button><br><br>
       </div>
     </body>
     <dv class="footer">
@@ -52,6 +50,6 @@
     <!-- <script src="./js/ethereumjs-util.js"></script> -->
     <script type="text/javascript" src="./js/abi.json"></script>
     <script src="./js/web3.min.js"></script>
-    <script src="./js/data.js"></script>
+    <script src="./js/viewdata.js"></script>
 
   </html>
