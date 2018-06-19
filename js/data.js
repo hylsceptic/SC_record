@@ -1,10 +1,10 @@
 var account;
-var temp
+var temp;
 var temp1;
 
 
 function sign(msg, pk) {
-	let Signature = web3.eth.accounts.sign(msg, pk)
+	let Signature = web3.eth.accounts.sign(msg, pk);
 	let signature = Signature.signature.substr(2); //remove 0x
 	const r = '0x' + signature.slice(0, 64);
 	const s = '0x' + signature.slice(64, 128);
@@ -19,8 +19,8 @@ window.addEventListener('load', function() {
 	  web3 = new Web3(web3.currentProvider);
 	  accounts = web3.eth.getAccounts();
 	  accounts.then(function(value) {
-	  	account = value[0]
-	  })
+	  	account = value[0];
+	  });
 	} else {
 	  // set the provider you want from Web3.providers
 		var text = document.getElementById("warning");
@@ -28,7 +28,7 @@ window.addEventListener('load', function() {
 	}
  	// var abi = JSON.parse(rawAbi);
 	myContract = new web3.eth.Contract(abi, address);
-})
+});
 
 document.getElementById("write").onclick = function search() {
  
@@ -37,7 +37,7 @@ document.getElementById("write").onclick = function search() {
 	var name = document.getElementById("name2").value;
 	var data = document.getElementById("data").value;
 	writeData(username, password, name, data);
-}
+};
 
 document.getElementById("read").onclick = function search() {
 	var username = document.getElementById("username3").value;
@@ -60,8 +60,8 @@ document.getElementById("read").onclick = function search() {
 				`</textarea>
 				`);
 		}
-	})
-}
+	});
+};
 
 document.getElementById("comfirm").onclick = function search() {
 	var comfirmer = document.getElementById("comfirmer").value;
@@ -75,8 +75,8 @@ document.getElementById("comfirm").onclick = function search() {
 
 
 	var pk = web3.utils.sha3(passwd);
-	signature = sign(web3.utils.sha3(drafterNameHash + dataNameHash.substr(2)), pk)
-	console.log(drafterNameHash, dataNameHash, drafterNameHash + dataNameHash.substr(2))
+	signature = sign(web3.utils.sha3(drafterNameHash + dataNameHash.substr(2)), pk);
+	console.log(drafterNameHash, dataNameHash, drafterNameHash + dataNameHash.substr(2));
 	
 	myContract.methods.confirm(comfirmerNameHash, drafterNameHash, dataNameHash, signature.v, signature.r, signature.s)
 	.send({from: account})
@@ -84,7 +84,7 @@ document.getElementById("comfirm").onclick = function search() {
 	    text.innerHTML = "数据确认成功。";
 	    })
 	.on('error', function(error) {text.innerHTML = "数据确认失败..."});
-}
+};
 
 document.getElementById("witness").onclick = function search() {
 	var eyewitness = document.getElementById("eyewitness").value;
@@ -101,7 +101,7 @@ document.getElementById("witness").onclick = function search() {
 
 	var pk = web3.utils.sha3(passwd);
 	var msg = web3.utils.sha3(web3.utils.sha3(confirmerNameHash + drafterNameHash.substr(2)) + dataNameHash.substr(2));
-	signature = sign(msg, pk)
+	signature = sign(msg, pk);
 	// console.log(drafterNameHash, dataNameHash, drafterNameHash + dataNameHash.substr(2))
 	
 	myContract.methods.witness(eyewitnessNameHash, confirmerNameHash, drafterNameHash, 
@@ -110,8 +110,8 @@ document.getElementById("witness").onclick = function search() {
 	.on('receipt', function(receipt){
 	    text.innerHTML = "数据确认成功。";
 	    })
-	.on('error', function(error) {text.innerHTML = "数据确认失败..."});
-}
+	.on('error', function(error) {text.innerHTML = "数据确认失败...";});
+};
 
 function writeData(userName, passwd, dataName, data) {
 	var userNameHash = web3.utils.sha3(userName);
@@ -119,7 +119,7 @@ function writeData(userName, passwd, dataName, data) {
 	accounts = web3.eth.accounts.privateKeyToAccount(pk);
 
 	dataNameHash = web3.utils.sha3(dataName);
-	Signature = web3.eth.accounts.sign(dataNameHash.toString('hex'), pk)
+	Signature = web3.eth.accounts.sign(dataNameHash.toString('hex'), pk);
 
 	signature = Signature.signature.substr(2); //remove 0x
 	const r = '0x' + signature.slice(0, 64);
@@ -134,7 +134,7 @@ function writeData(userName, passwd, dataName, data) {
 	.on('receipt', function(receipt){
 	    text.innerHTML = "数据写入成功。";
 	    })
-	.on('error', function(error) {text.innerHTML = "数据写入失败，用户名、密码错误，或数据名重复..."});
+	.on('error', function(error) {text.innerHTML = "数据写入失败，用户名、密码错误，或数据名重复...";});
 
 }
 

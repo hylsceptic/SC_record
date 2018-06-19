@@ -5,14 +5,14 @@ let Web3 = require('web3'); // https://www.npmjs.com/package/web3
 const abi = require('./js/abi.js');
 
 let web3 = new Web3();
-web3.setProvider(new web3.providers.HttpProvider('http://localhost:8545'));
+web3.setProvider(new web3.providers.HttpProvider('http://116.62.151.218:8545'));
 
-let user = 'hyl'
-userHash = web3.utils.sha3(user)
-let passwd1 = 'passwd1'
+let user = 'hyl';
+userHash = web3.utils.sha3(user);
+let passwd1 = 'passwd1';
 let pk1 = web3.utils.sha3(passwd1);
 let account1 = web3.eth.accounts.privateKeyToAccount(pk1);
-let passwd2 = 'passwd2'
+let passwd2 = 'passwd2';
 let pk2 = web3.utils.sha3(passwd2);
 let account2 = web3.eth.accounts.privateKeyToAccount(pk2);
 let dataName = 'test';
@@ -20,10 +20,10 @@ let data = 'test';
 
 
 let myContract = new web3.eth.Contract(abi.abi, abi.address);
-let addr = '0x80905cf1E5a169e745586F5F54648AcC3055ee12'
+let addr = '0x80905cf1E5a169e745586F5F54648AcC3055ee12';
 
-let addressHash = web3.utils.sha3(account2.address)
-let signature1 = sign(addressHash, pk1)
+let addressHash = web3.utils.sha3(account2.address);
+let signature1 = sign(addressHash, pk1);
 
 let dataNameHash = web3.utils.sha3(dataName);
 signature2 = sign(dataNameHash, pk2);
@@ -33,13 +33,15 @@ signature2 = sign(dataNameHash, pk2);
 // writePublicRecord(userHash, dataNameHash, data, signature2)
 // readPublicRecord(userHash, dataNameHash)
 // myContract.methods.passwords(web3.utils.sha3('1')).call().then(console.log)
-// myContract.methods.confirmation(web3.utils.sha3('test2'), web3.utils.sha3('test1'), web3.utils.sha3('1223')).call().then(console.log)
-myContract.methods.witnesses(web3.utils.sha3('test3'), web3.utils.sha3('test4'), web3.utils.sha3('test1'), web3.utils.sha3('123')).call().then(console.log)
+// myContract.methods.confirmations(
+// 	web3.utils.sha3('hyl'), web3.utils.sha3('cxf'), web3.utils.sha3('陈笑')).call().then(console.log);
+myContract.methods.witnesses(
+	web3.utils.sha3('cxf'), web3.utils.sha3('hyl'), web3.utils.sha3('cxf'), web3.utils.sha3('陈笑 ')).call().then(console.log)
 // myContract.methods.a1().call().then(console.log)
 // myContract.methods.a2().call().then(console.log)
 
 function sign(msg, pk) {
-	let Signature = web3.eth.accounts.sign(msg, pk)
+	let Signature = web3.eth.accounts.sign(msg, pk);
 	let signature = Signature.signature.substr(2); //remove 0x
 	const r = '0x' + signature.slice(0, 64);
 	const s = '0x' + signature.slice(64, 128);
@@ -51,10 +53,10 @@ function sign(msg, pk) {
 function register(userHash, account) {
 	myContract.methods.register(userHash, account.address).send({from: addr})
 	.on('receipt', function(receipt) {
-		console.log("register test: pass......")
+		console.log("register test: pass......");
 	})
 	.on('error', function(error) {
-		console.log("register test: error......")
+		console.log("register test: error......");
 	});
 }
 
@@ -62,10 +64,10 @@ function register(userHash, account) {
 function changePasswd(userHash, account, signature) {
 	myContract.methods.changePasswd(userHash, account.address, signature.v, signature.r, signature.s).send({from: addr})
 	.on('receipt', function(receipt) {
-		console.log("change password test: pass......")
+		console.log("change password test: pass......");
 	})
 	.on('error', function(error) {
-		console.log("change password test: error......")
+		console.log("change password test: error......");
 		console.log(error)
 	});
 }
@@ -76,10 +78,10 @@ function writePublicRecord(userHash, dataNameHash, data, signature) {
 	myContract.methods.writePublicRecord(
 		userHash, dataNameHash, data, signature.v, signature.r, signature.s).send({from: addr, gas: 1000000})
 	.on('receipt', function(receipt){
-		console.log("write data test: pass......")
+		console.log("write data test: pass......");
 	    })
 	.on('error', function(error) {
-		console.log("write data test: error......")
+		console.log("write data test: error......");
 	});
 }
 
