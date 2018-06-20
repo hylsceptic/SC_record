@@ -12,23 +12,7 @@ function sign(msg, pk) {
 	return	{v: v, r: r, s: s};
 }
 
-window.addEventListener('load', function() {
-
-  // Checking if Web3 has been injected by the browser (Mist/MetaMask)
-	if (typeof web3 !== 'undefined') {
-	  web3 = new Web3(web3.currentProvider);
-	  accounts = web3.eth.getAccounts();
-	  accounts.then(function(value) {
-	  	account = value[0]
-	  })
-	} else {
-	  // set the provider you want from Web3.providers
-		var text = document.getElementById("warning");
-		text.innerHTML = "No ethereum Api detected, please install MetaMask first!!!";
-	}
- 	// var abi = JSON.parse(rawAbi);
-	myContract = new web3.eth.Contract(abi, address);
-})
+window.addEventListener('load', init())
 
 // document.getElementById("write").onclick = function search() {
  
@@ -47,6 +31,7 @@ document.getElementById("read").onclick = function search() {
 	var text = document.getElementById("resultdata");
 	myContract.methods.readPublicRecord(userNameHash, nameHash).call().then(
 		function(data) {
+		console.log(data);
 		if(data=="") {
 			document.getElementById("readresult").innerHTML = "无此记录，请检查用户名以及数据名。";
 			document.getElementById("resultdata").innerHTML = "";

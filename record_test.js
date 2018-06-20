@@ -1,51 +1,77 @@
 var Password;
-let fs = require("fs");
-const solc = require('solc');
-let Web3 = require('web3'); // https://www.npmjs.com/package/web3
-const abi = require('./js/abi.js');
+var fs = require("fs");
+var solc = require('solc');
+var Web3 = require('web3'); // https://www.npmjs.com/package/web3
+var abi = require('./js/abi.js');
+var series = require('async/series');
 
-let web3 = new Web3();
+var web3 = new Web3();
 web3.setProvider(new web3.providers.HttpProvider('http://116.62.151.218:8545'));
+// web3.setProvider(new web3.providers.HttpProvider('http://localhost:8545'));
 
-let user = 'hyl';
-userHash = web3.utils.sha3(user);
-let passwd1 = 'passwd1';
-let pk1 = web3.utils.sha3(passwd1);
-let account1 = web3.eth.accounts.privateKeyToAccount(pk1);
-let passwd2 = 'passwd2';
-let pk2 = web3.utils.sha3(passwd2);
-let account2 = web3.eth.accounts.privateKeyToAccount(pk2);
-let dataName = 'test';
-let data = 'test';
+var passwd1 = 'passwd1';
+var pk1 = web3.utils.sha3(passwd1);
+var account1 = web3.eth.accounts.privateKeyToAccount(pk1);
+var passwd2 = 'passwd2';
+var pk2 = web3.utils.sha3(passwd2);
+var account2 = web3.eth.accounts.privateKeyToAccount(pk2);
+var dataName = 'test';
+var data = 'test';
 
 
-let myContract = new web3.eth.Contract(abi.abi, abi.address);
-let addr = '0x80905cf1E5a169e745586F5F54648AcC3055ee12';
+var myContract = new web3.eth.Contract(abi.abi, abi.address);
+// web3.eth.getAccounts().then(e => {
+// 	console.log(e);
+// });
+var addr = '0x015C83D3d9bdA8E660A8228b1B952efb50f59A14';
 
-let addressHash = web3.utils.sha3(account2.address);
-let signature1 = sign(addressHash, pk1);
+var addressHash = web3.utils.sha3(account2.address);
+var signature1 = sign(addressHash, pk1);
 
-let dataNameHash = web3.utils.sha3(dataName);
+var dataNameHash = web3.utils.sha3(dataName);
 signature2 = sign(dataNameHash, pk2);
 
-// register(userHash, account1)
+var user = 'hyltest10';
+userHash = web3.utils.sha3(user);
+series(
+	[
+	function (callback) {
+		register(userHash, account1);
+		callback(null, null);
+	},
+	function (callback) {
+		changePasswd(userHash, account2, signature1);
+		callback(null, null);
+	},
+	function (callback) {
+		writePublicRecord(userHash, dataNameHash, data, signature2);
+		callback(null, null);
+	},
+	function (callback) {
+		readPublicRecord(userHash, dataNameHash);
+	}
+	],
+	function (err, result){console.log(result);}
+);
+
+// register(userHash, account1);
 // changePasswd(userHash, account2, signature1)
 // writePublicRecord(userHash, dataNameHash, data, signature2)
 // readPublicRecord(userHash, dataNameHash)
 // myContract.methods.passwords(web3.utils.sha3('1')).call().then(console.log)
 // myContract.methods.confirmations(
 // 	web3.utils.sha3('hyl'), web3.utils.sha3('cxf'), web3.utils.sha3('陈笑')).call().then(console.log);
-myContract.methods.witnesses(
-	web3.utils.sha3('cxf'), web3.utils.sha3('hyl'), web3.utils.sha3('cxf'), web3.utils.sha3('陈笑 ')).call().then(console.log)
+// myContract.methods.witnesses(
+// 	web3.utils.sha3('cxf'), web3.utils.sha3('hyl'), web3.utils.sha3('cxf'), web3.utils.sha3('陈笑 ')).call().then(console.log)
 // myContract.methods.a1().call().then(console.log)
 // myContract.methods.a2().call().then(console.log)
 
 function sign(msg, pk) {
-	let Signature = web3.eth.accounts.sign(msg, pk);
-	let signature = Signature.signature.substr(2); //remove 0x
-	const r = '0x' + signature.slice(0, 64);
-	const s = '0x' + signature.slice(64, 128);
-	const v = '0x' + signature.slice(128, 130);
+	var Signature = web3.eth.accounts.sign(msg, pk);
+	var signature = Signature.signature.substr(2); //remove 0x
+	var r = '0x' + signature.slice(0, 64);
+	var s = '0x' + signature.slice(64, 128);
+	var v = '0x' + signature.slice(128, 130);
 	return	{v: v, r: r, s: s};
 }
 
