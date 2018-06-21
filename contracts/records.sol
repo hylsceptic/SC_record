@@ -67,8 +67,5 @@ contract record {
         bytes memory prefix = "\x19Ethereum Signed Message:\n32";
         bytes32 prefixedHash = keccak256(prefix, keccak256(keccak256(_confirmer, _drafter), _dataNameHash));
         a1 = ecrecover(prefixedHash, _v, _r, _s);
-        // require(ecrecover(prefixedHash, _v, _r, _s) == passwords[_eyewitness]);
-        // require(confirmations[_confirmer][_drafter][_dataNameHash] == true);
-        // witnesses[_eyewitness][_confirmer][_drafter][_dataNameHash] = true;
     }
 }

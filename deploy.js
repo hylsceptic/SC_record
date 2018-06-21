@@ -1,50 +1,48 @@
-let fs = require("fs");
-const solc = require('solc');
-let Web3 = require('web3'); // https://www.npmjs.com/package/web3
+var Web3 = require("web3");
+var fs = require("fs");
+var solc = require('solc');
+var web3 = new Web3(new Web3.providers.HttpProvider('http://116.62.151.218:8545'));
+var localWeb3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
+// var localWeb3 = 
+var pk = web3.utils.sha3("this is a private account");
+accounts = web3.eth.accounts.privateKeyToAccount(pk);
 
-// Create a web3 connection to a running geth node over JSON-RPC running at
-// http://localhost:8545
-// For geth VPS server + SSH tunneling see
-// https://gist.github.com/miohtama/ce612b35415e74268ff243af645048f4
-let web3 = new Web3();
-var url = 'http://116.62.151.218:8545'
-web3.setProvider(new web3.providers.HttpProvider(url));
+// web3.eth.getAccounts().then( e=> {
+//   accts = e;
+//   web3.eth.sendTransaction({from: accts[0], to: accounts.address, value: web3.utils.toWei('900')});
+// });
 
-// Read the compiled contract code
-// Compile with
-
-const input = fs.readFileSync('./contracts/records.sol');
-const output = solc.compile(input.toString(), 1);
+// var web3 = new Web3();
+// console.log(web3.eth.accounts.wallet);
+var input = fs.readFileSync('./contracts/records.sol');
+var output = solc.compile(input.toString(), 1);
 console.log(output['errors']);
-const bytecode = output.contracts[':record'].bytecode;
-const abi = JSON.parse(output.contracts[':record'].interface);
-// Contract object
-const contract = new web3.eth.Contract(abi);
-
-// Deploy contract instance
-var address;
-web3.eth.getAccounts().then( function(accouts) {
-
-  const contractInstance = contract.deploy({
-    data: '0x' + bytecode,
-  }).send({
-    from: accouts[0],
-    gas: 1000000,
-    gasPrice: 2e9
-  })
-  .on('error', function(error){ console.log("Error: " + error) })
-  .on('transactionHash', function(transactionHash){ console.log('transactionHash :' + transactionHash) })
+var bytecode = output.contracts[':record'].bytecode;
+var abi = JSON.parse(output.contracts[':record'].interface);
+web3.eth.getTransactionCount(accounts.address).then(function(nonce) {
+  // console.log(nonce);
+    accounts.signTransaction({
+        from: accounts.address,
+        gas: 1000000,
+        gasPrice: 2e9,
+        data: '0x' + bytecode,
+        nonce: nonce,
+      }
+    )//.then(console.log) 
+    .then(function(tx) {
+        web3.eth.sendSignedTransaction(tx.rawTransaction)
+  .on('error', function(error){ console.log("Error: " + error); })
+  .on('transactionHash', function(transactionHash){ console.log('transactionHash :' + transactionHash); })
   .on('receipt', function(receipt){
-    const address = receipt.contractAddress;
-    var json = ("address = " + JSON.stringify(address) + ';\nabi = ' + JSON.stringify(abi))
+    var address = receipt.contractAddress;
+    console.log("123456678");
+    var json = ("address = " + JSON.stringify(address) + ';\nabi = ' + JSON.stringify(abi));
     fs.writeFile('./js/abi.json', json, 'utf8');
     json = json + `
   module.exports.abi = abi;  
   module.exports.address = address; 
   `
     fs.writeFile('./js/abi.js', json, 'utf8');
-     console.log(receipt.contractAddress) // contains the new contract address
+     console.log(receipt.contractAddress); // contains the new contract address
   });
-});
-// Quick test the contract
-
+});});
