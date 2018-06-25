@@ -23,7 +23,7 @@ web3.eth.getTransactionCount(accounts.address).then(function(nonce) {
   // console.log(nonce);
     accounts.signTransaction({
         from: accounts.address,
-        gas: 1000000,
+        gas: 2000000,
         gasPrice: 2e9,
         data: '0x' + bytecode,
         nonce: nonce,

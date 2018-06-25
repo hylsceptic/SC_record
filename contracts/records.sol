@@ -7,13 +7,12 @@ contract record {
     mapping (bytes32 => mapping (bytes32 => mapping (bytes32 => bool))) public confirmations;
     mapping (bytes32 => mapping (bytes32 => mapping (bytes32 => mapping (bytes32 => bool)))) public witnesses;
     mapping (bytes32 => address) public passwords;
-    address public a1;
 
 
 
     function recoverAddr(bytes32 msgHash, uint8 v, bytes32 r, bytes32 s) public pure returns (address) {
         bytes memory prefix = "\x19Ethereum Signed Message:\n32";
-        bytes32 prefixedHash = keccak256(prefix, msgHash);
+        bytes32 prefixedHash = keccak256(abi.encodePacked(prefix, msgHash));
         return ecrecover(prefixedHash, v, r, s);
     }
 
@@ -56,7 +55,7 @@ contract record {
     function confirm(bytes32 _confirmer, bytes32 _drafter, bytes32 _dataNameHash, uint8 _v, bytes32 _r, bytes32 _s)
     public {
         bytes memory prefix = "\x19Ethereum Signed Message:\n32";
-        bytes32 prefixedHash = keccak256(prefix, keccak256(_drafter, _dataNameHash));
+        bytes32 prefixedHash = keccak256(abi.encodePacked(prefix, keccak256(abi.encodePacked(_drafter, _dataNameHash))));
         require(ecrecover(prefixedHash, _v, _r, _s) == passwords[_confirmer]);
         require(sigs[_drafter][_dataNameHash] == true);
         confirmations[_confirmer][_drafter][_dataNameHash] = true;
@@ -65,7 +64,10 @@ contract record {
     function witness(bytes32 _eyewitness, bytes32 _confirmer, bytes32 _drafter, bytes32 _dataNameHash, uint8 _v, bytes32 _r, bytes32 _s)
     public {
         bytes memory prefix = "\x19Ethereum Signed Message:\n32";
-        bytes32 prefixedHash = keccak256(prefix, keccak256(keccak256(_confirmer, _drafter), _dataNameHash));
-        a1 = ecrecover(prefixedHash, _v, _r, _s);
+        bytes32 prefixedHash = keccak256(abi.encodePacked(prefix, keccak256(
+            abi.encodePacked(keccak256(abi.encodePacked(_confirmer, _drafter)), _dataNameHash))));
+        require(ecrecover(prefixedHash, _v, _r, _s) == passwords[_eyewitness]);
+        require(confirmations[_confirmer][_drafter][_dataNameHash] == true);
+        witnesses[_eyewitness][_confirmer][_drafter][_dataNameHash] = true;
     }
 }

@@ -2,7 +2,7 @@ var account;
 var temp;
 var temp1;
 var localWeb3;
-
+var ipfsresult;
 window.addEventListener('load', init());
 
 
@@ -18,8 +18,22 @@ document.getElementById("read").onclick = function search() {
 		if(data=="") {
 			document.getElementById("readresult").innerHTML = "无此记录，请检查用户名以及数据名。";
 			document.getElementById("resultdata").innerHTML = "";
-		} else {
+		} else if(data[0]=="Q"){
+			document.getElementById("readresult").innerHTML = "";
 
+	    	ipfs.cat("/ipfs/" + data, function(err, result) {
+		    	ipfsresult = result;
+				arrayBufferView = new Uint8Array(result);
+			    var blob = new Blob( [ arrayBufferView ], { type: "image/jpeg" } );
+			    var urlCreator = window.URL || window.webkitURL;
+			    var imageUrl = urlCreator.createObjectURL( blob );
+			    console.log(imageUrl)
+				text.innerHTML = (`
+					<br/>
+					<img id="image" src="${imageUrl}" height="240">
+					`);
+	    	});
+		} else {
 			document.getElementById("readresult").innerHTML = "";
 			text.innerHTML = (`
 				<h5>Data in this record:</h5>

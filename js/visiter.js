@@ -1,7 +1,6 @@
 var account;
-var temp
+var temp;
 var temp1;
-
 
 window.addEventListener('load', function() {
 
@@ -10,8 +9,8 @@ window.addEventListener('load', function() {
 	  web3 = new Web3(web3.currentProvider);
 	  accounts = web3.eth.getAccounts();
 	  accounts.then(function(value) {
-	  	account = value[0]
-	  })
+	  	account = value[0];
+	  });
 	} else {
 	  // set the provider you want from Web3.providers
 		var text = document.getElementById("warning");
@@ -19,7 +18,7 @@ window.addEventListener('load', function() {
 	}
  	// var abi = JSON.parse(rawAbi);
 	myContract = new web3.eth.Contract(abi, address);
-})
+});
 
 
 
@@ -33,5 +32,6 @@ document.getElementById("send").onclick = function search() {
 		gas: 32000,
 		data: web3.utils.utf8ToHex(data)}).then(function(recepts) {
 			console.log(recepts);
-		})
-}
+		});
+};
+

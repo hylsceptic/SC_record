@@ -33,41 +33,14 @@ var signature1 = sign(addressHash, pk1);
 
 var dataNameHash = web3.utils.sha3(dataName);
 signature2 = sign(dataNameHash, pk2);
-// series(
-// 	[
-// 	function (callback) {
-// 		callback(null, register(userHash, account1));
-// 	},
-	// function (callback) {
-	// 	callback(null, changePasswd(userHash, account2, signature1));
-	// },
-	// function (callback) {
-	// 	callback(null, writePublicRecord(userHash, dataNameHash, data, signature2));
-	// },
-	// function (callback) {
-	// 	readPublicRecord(userHash, dataNameHash);
-	// }
-// 	],
-// 	function (err, result){console.log(result);}
-// );
-// console.log(myContract._address);
+
 var user = 'test17';
 userHash = web3.utils.sha3(user);
 // register(userHash, account1);
 register(userHash, account1, 
 	function() {changePasswd(userHash, account2, signature1, 
-		function() {writePublicRecord(userHash, dataNameHash, data, signature2,
-			function() {readPublicRecord(userHash, dataNameHash);});});});
-// changePasswd(userHash, account2, signature1)
-// writePublicRecord(userHash, dataNameHash, data, signature2)
-// readPublicRecord(userHash, dataNameHash)
-// myContract.methods.passwords(web3.utils.sha3('1')).call().then(console.log)
-// myContract.methods.confirmations(
-// 	web3.utils.sha3('hyl'), web3.utils.sha3('cxf'), web3.utils.sha3('陈笑')).call().then(console.log);
-// myContract.methods.witnesses(
-// 	web3.utils.sha3('cxf'), web3.utils.sha3('hyl'), web3.utils.sha3('cxf'), web3.utils.sha3('陈笑 ')).call().then(console.log)
-// myContract.methods.a1().call().then(console.log)
-// myContract.methods.a2().call().then(console.log)
+	function() {writePublicRecord(userHash, dataNameHash, data, signature2,
+	function() {readPublicRecord(userHash, dataNameHash);});});});
 
 function sign(msg, pk) {
 	var Signature = web3.eth.accounts.sign(msg, pk);
