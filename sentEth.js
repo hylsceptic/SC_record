@@ -22,4 +22,6 @@ account2 = web3.eth.accounts.privateKeyToAccount(pk);
 // 				web3.eth.sendSignedTransaction(tx.rawTransaction);
 // });});
 
+
+
 web3.eth.getBalance(account1.address).then(console.log);
