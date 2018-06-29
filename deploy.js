@@ -7,10 +7,6 @@ var localWeb3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'
 var pk = web3.utils.sha3("this is a private account");
 accounts = web3.eth.accounts.privateKeyToAccount(pk);
 
-// web3.eth.getAccounts().then( e=> {
-//   accts = e;
-//   web3.eth.sendTransaction({from: accts[0], to: accounts.address, value: web3.utils.toWei('900')});
-// });
 
 // var web3 = new Web3();
 // console.log(web3.eth.accounts.wallet);
