@@ -16,7 +16,14 @@ window.addEventListener('load', function() {
 		var text = document.getElementById("warning");
 		text.innerHTML = "No ethereum Api detected, please install MetaMask first!!!";
 	}
- 	// var abi = JSON.parse(rawAbi);
+	if(typeof ipfs !== 'undefined') {}
+	else {
+		console.log(12344);
+		document.getElementById("ipfsprompt").innerHTML = `
+			<h2>注意：</h2>
+			<p style="color:red;">没有检测到ipfs节点，请安装ipfs伴侣，且通过https访问。</p>
+		`
+	}
 	myContract = new localWeb3.eth.Contract(abi, address);
 });
 
