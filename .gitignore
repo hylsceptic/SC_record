@@ -3,3 +3,4 @@ web3/*
 node_modules/*
 package-lock.json
 js-ipfs/*
+./ethernaut.js

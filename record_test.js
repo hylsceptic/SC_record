@@ -34,7 +34,7 @@ var signature1 = sign(addressHash, pk1);
 var dataNameHash = web3.utils.sha3(dataName);
 signature2 = sign(dataNameHash, pk2);
 
-var user = 'test17';
+var user = 'test20';
 userHash = web3.utils.sha3(user);
 // register(userHash, account1);
 register(userHash, account1, 

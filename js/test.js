@@ -42,9 +42,9 @@ document.getElementById("loadfig").addEventListener('input', function() {
 		var img = document.getElementById("image");
 		setImg(file, img);
 		img.style.display = "block";
-		ipfs.add(Buffer.from(file), function(err, result) {
-			hash = result[0].hash;
-		});
+		// ipfs.add(Buffer.from(file), function(err, result) {
+		// 	hash = result[0].hash;
+		// });
 	    // var arrayBufferView;
 	    // ipfs.add(Buffer.from(file), function(err, result) {
 	    // 	hash = result[0].hash;
@@ -62,9 +62,6 @@ document.getElementById("loadfile").addEventListener('input', function() {
 	fReader.readAsArrayBuffer($file.files[0]);
 	fReader.onloadend = function(event){
 		file = event.target.result;
-		ipfs.add(Buffer.from(file), function(err, result) {
-			hash = result[0].hash;
-		});
 	};
 }); 
 
@@ -72,9 +69,36 @@ document.getElementById("write1").onclick = function search() {
 	var username = document.getElementById("username1").value;
 	var password = document.getElementById("password1").value;
 	var name = document.getElementById("name1").value;
-	var data = hash;
-	console.log(data);
-	writeData(username, password, name, data, "writeresult1");
+	var server = document.getElementById("server");
+	var data;
+
+	// update file to ipfs through the server.
+	if(server.checked) {	
+		var formData = new FormData();
+		data = JSON.stringify(Array.from(new Uint8Array(file)));
+		// console.log(data.substr(0, 5))
+		formData.append('data', data);
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				data = this.responseText;
+				console.log(data);
+				hash = data;
+				writeData(username, password, name, data, "writeresult1");
+			}
+		};
+		xhttp.open('POST', 'ipfs', true);
+		xhttp.send(formData);
+
+	// update to ipfs through local node.
+	} else {
+		ipfs.add(Buffer.from(file), function(err, result) {
+			hash = result[0].hash;
+		});
+		data = hash;
+		console.log(data);
+		writeData(username, password, name, data, "writeresult1");
+	}
 };
 
 document.getElementById("write2").onclick = function search() { 

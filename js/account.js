@@ -19,13 +19,34 @@ document.getElementById("register").onclick = function search() {
 	accounts = localWeb3.eth.accounts.privateKeyToAccount(pk);
 	console.log(userNameHash);
 	text.innerHTML = "等待转账确认...";
-	myContract.methods.register(userNameHash, accounts.address).send({from: account})
-	.on('receipt', function(receipt) {
-		text.innerHTML = "注册成功。";
-	})
-	.on('error', function(error) {
-		text.innerHTML = "注册失败，用户名是否已注册。";
-	});
+	var server = document.getElementById('server');
+	if(server.checked) {
+		var formData = new FormData();
+		formData.append('user', userNameHash);
+		formData.append('address', accounts.address);
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				data = this.responseText;
+				console.log(data);
+				if(data=="error") {
+					text.innerHTML = "注册失败，用户名是否已注册。";
+				} else {
+					text.innerHTML = "注册成功。";
+				}
+			}
+		};
+		xhttp.open('POST', 'register', true);
+		xhttp.send(formData);
+	} else {
+		myContract.methods.register(userNameHash, accounts.address).send({from: account})
+		.on('receipt', function(receipt) {
+			text.innerHTML = "注册成功。";
+		})
+		.on('error', function(error) {
+			text.innerHTML = "注册失败，用户名是否已注册。";
+		});
+	}
 };
 
 document.getElementById("cgpwd").onclick = function search() {
@@ -49,13 +70,35 @@ document.getElementById("cgpwd").onclick = function search() {
 	var signature = sign(signMsg, signPk);
 
 	text.innerHTML = "等待转账确认...";
-	myContract.methods.changePasswd(userNameHash, address, signature.v, signature.r, signature.s).send({from: account})
-	.on('receipt', function(receipt) {
-		text.innerHTML = "修改成功。";
-	})
-	.on('error', function(error) {
-		text.innerHTML = "修改失败。";
-	});
+	var server = document.getElementById('server');
+	if(server.checked){
+		var formData = new FormData();
+		formData.append('user', userNameHash);
+		formData.append('address', accounts.address);
+		formData.append('signature', JSON.stringify(signature));
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				data = this.responseText;
+				console.log(data);
+				if(data=="error") {
+					text.innerHTML = "修改失败。";
+				} else {
+					text.innerHTML = "修改成功。";
+				}
+			}
+		};
+		xhttp.open('POST', 'cgpwd', true);
+		xhttp.send(formData);
+	} else {
+		myContract.methods.changePasswd(userNameHash, address, signature.v, signature.r, signature.s).send({from: account})
+		.on('receipt', function(receipt) {
+			text.innerHTML = "修改成功。";
+		})
+		.on('error', function(error) {
+			text.innerHTML = "修改失败。";
+		});
+	}
 };
 
 
