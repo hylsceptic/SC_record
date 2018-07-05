@@ -21,14 +21,13 @@
                 <input type="file"
                        id="loadfig" accept="image/png, image/jpeg" />
             </div>
+        <br>
         <img id="image" src="" style="display: none;" height="240">
         <div class="figresult"></div>
-        <br/>
         <h3>写入图片</h3>
         User name: <input id="username1" type="text" placeholder="Enter user name">
         Password:  <input id="password1" type="password" placeholder="Enter password">
         Data name: <input id="name1" type="text" placeholder="Enter data name"><br/>
-        <input type="checkbox" id="server" value="">服务器<br>
         <div id="writeresult1">
           
         </div>
@@ -40,13 +39,16 @@
                 <label for="avatar">File: </label>
                 <input type="file" id="loadfile"/>
             </div>
+            <p id="uploadState"></p>
         <br/>
         <h3>写入文件</h3>
         User name: <input id="username2" type="text" placeholder="Enter user name">
         Password:  <input id="password2" type="password" placeholder="Enter password">
         Data name: <input id="name2" type="text" placeholder="Enter data name"><br/>
         <button id="write2">Write</button><br>
-        <div id="writeresult2"></div>
+        <div id="writeresult2"></div><br><br>
+        <input type="checkbox" id="server1" value="">服务器(ipfs)<br>
+        <input type="checkbox" id="server2" value="">服务器(上链)<br>
       </div>
     </body>
 <!--     <dv class="footer">

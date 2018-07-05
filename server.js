@@ -136,10 +136,10 @@ http.createServer(function (req, res) {
       }
       if(req.url=='/ipfs'){
         form = new multiparty.Form();
+        form.maxFieldsSize = 110485760;
         form.parse(req, function(err, fields, files) {
           try{
             var data = JSON.parse(fields.data[0]);
-            console.log(typeof data);
             ipfs.files.add(Buffer.from(data), function(err, result) {
               if(err != null) {
                 console.log(err);
