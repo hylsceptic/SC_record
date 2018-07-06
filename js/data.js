@@ -22,8 +22,10 @@ document.getElementById("write").onclick = function search() {
 	var server = document.getElementById('server');
 	if(server.checked){
 		var formData = new FormData();
-		formData.append('user', userNameHash);
-		formData.append('dataName', dataNameHash);
+		formData.append('userName', username);
+		formData.append('userHash', userNameHash);
+		formData.append('dataNameHash', dataNameHash);
+		formData.append('dataName', name);
 		formData.append('data', JSON.stringify(data));
 		formData.append('signature', JSON.stringify(signature));
 		var xhttp = new XMLHttpRequest();

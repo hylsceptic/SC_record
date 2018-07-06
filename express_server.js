@@ -5,6 +5,7 @@ var ipfsAPI = require('ipfs-api');
 var multiparty = require('multiparty');
 var abi = require('./js/abi.js');
 var Web3 = require('web3');
+var myDb = require('./db.js');
 
 var ipfs = ipfsAPI('/ip4/127.0.0.1/tcp/5001');
 
@@ -54,9 +55,10 @@ app.post('/register', (req, res) => {
   form = new multiparty.Form();
   form.parse(req, function(err, fields, files) {
     try{
-      var user = fields.user[0];
+      var userHash = fields.userHash[0];
+      var userName = fields.userName[0];
       var address = fields.address[0];
-      register(user, address, function(result){
+      register(userHash, address, function(result){
         if(result == 'err') {
           res.write("error");
           res.end();
@@ -64,6 +66,7 @@ app.post('/register', (req, res) => {
           // console.log(result);
           res.write(result.transactionHash);
           res.end();
+          myDb.insertUser(userName, userHash, address);
         }
       });
     }
@@ -75,18 +78,21 @@ app.post('/write', (req, res) => {
   form = new multiparty.Form();
   form.parse(req, function(err, fields, files) {
     try{
-      var user = fields.user[0];
+      var userHash = fields.userHash[0];
+      var userName = fields.userName[0];
       var dataName = fields.dataName[0];
+      var dataNameHash = fields.dataNameHash[0];
       var data = JSON.parse(fields.data[0]);
       var signature = JSON.parse(fields.signature[0]);
       // console.log(data, signature)
-      writePublicRecord(user, dataName, data, signature, function(result){
+      writePublicRecord(userHash, dataNameHash, data, signature, function(result){
         if(result == 'err') {
           res.write("error");
           res.end();
         } else {
           res.write(result.transactionHash);
           res.end();
+          myDb.insertDate(userName, dataName, data);
         }
       });
     }
@@ -159,6 +165,13 @@ app.post('/cgpwd', (req, res) => {
       });
     }
     catch(err1) {console.log(err1);}
+  });
+});
+
+app.get('/newData', (req, res) => {
+  myDb.read('datas', (result) => {
+    res.write(JSON.stringify(result));
+    res.end();
   });
 });
 

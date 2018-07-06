@@ -18,6 +18,41 @@ window.addEventListener('load', function() {
 	testrpc = new Web3(new Web3.providers.HttpProvider('http://116.62.151.218:8545'));
 	var pk = web3.utils.sha3("this is a private account");
 	accounts = web3.eth.accounts.privateKeyToAccount(pk);
+
+	var table = document.getElementById('newData');
+
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			data = JSON.parse(this.responseText);
+			if(data=="error") {
+				table.innerHTML = `<p>无法显示...</p>` 
+				// text.innerHTML = "数据确认失败...";
+			} else {
+				text = `
+          <tr>
+            <th width="25%">用户名</th>
+            <th width="25%">数据名</th> 
+            <th width="50%">数据</th>
+          </tr>
+          `;
+				for(i=0; i<data.length; i++) {
+					item = data[i];
+					text = text + `
+			          <tr>
+			            <th width="25%">${item.name}</th>
+			            <th width="25%">${item.dataname}</th> 
+			            <th width="50%">${item.data}</th>
+			          </tr>
+			        `;
+				}
+				table.innerHTML = text;
+			}
+		}
+	};
+	xhttp.open('GET', 'newData', true);
+	xhttp.send();
+
 });
 
 document.getElementById("sendeth").onclick = function search() {
