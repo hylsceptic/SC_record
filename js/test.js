@@ -161,8 +161,10 @@ function writeData(userName, passwd, dataName, data, idName) {
 
 	if(server.checked){
 		var formData = new FormData();
-		formData.append('user', userNameHash);
-		formData.append('dataName', dataNameHash);
+		formData.append('userName', userName);
+		formData.append('userHash', userNameHash);
+		formData.append('dataNameHash', dataNameHash);
+		formData.append('dataName', dataName);
 		formData.append('data', JSON.stringify(data));
 		formData.append('signature', JSON.stringify(signature));
 		var xhttp = new XMLHttpRequest();

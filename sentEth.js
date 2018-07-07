@@ -4,6 +4,7 @@ var solc = require('solc');
 var web3 = new Web3(new Web3.providers.HttpProvider('http://116.62.151.218:8545'));
 // var localWeb3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
 // var localWeb3 = 
+// web3 = Web3(HTTPProvider("https://mainnet.infura.io/OmKD5bDAup22XMdLyD5Y"))
 var pk = web3.utils.sha3("this is a private account");
 account1 = web3.eth.accounts.privateKeyToAccount(pk);
 
@@ -24,7 +25,6 @@ account2 = web3.eth.accounts.privateKeyToAccount(pk);
 // });});
 
 
-// web3 = Web3(HTTPProvider("https://mainnet.infura.io/OmKD5bDAup22XMdLyD5Y"))
 
 
 

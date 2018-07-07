@@ -35,10 +35,10 @@ function createTable() {
   	address TEXT,
   	time timestamp) default charset=utf8
   `;
-  // con.query(sql, function (err, result) {
-  //   if (err) throw err;
-  //   console.log("Table created");
-  // });
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("Table created");
+  });
   sql = `CREATE TABLE datas (
   	name VARCHAR(255), 
   	dataname TEXT,
@@ -50,30 +50,36 @@ function createTable() {
   });
 }
 
-function insertUser(userName, userHash, address) {
-  // con.connect(function(err) {
-  // 	if(err) {console.log(err);} else {
+function insertUser(userName, userHash, address, callback) {
+		  var error = null;
 		  var time = myDate.toLocaleString();
 		  console.log(time);
 		  var sql = `INSERT INTO users (userName, userHash, address, time) VALUES ('${userName}', '${userHash}', '${address}', '${time}')`;
 		  con.query(sql, function (err, result) {
-		    if (err) throw err;
-		    console.log("1 record inserted");
+		    if (err) {
+		    	console.log(err);
+		    	error = err;
+		    }
+		    callback(error);
 		  });
 		// }
   // });
   // con.end();
 }
 
-function insertDate(userName, dataName, data) {
+function insertDate(userName, dataName, data, callback) {
   // con.connect(function(err) {
   // 	if(err) {console.log(err);} else {
 	  var time = myDate.toLocaleString();
 	  console.log(time);
 	  var sql = `INSERT INTO datas (name, dataname, data, time) VALUES ('${userName}', '${dataName}', '${data}', '${time}')`;
 	  con.query(sql, function (err, result) {
-	    if (err) throw err;
-	    console.log("1 record inserted");
+		var error = null;
+	    if (err) {
+	    	console.log(err);
+	    	error = err;
+	    }
+	    callback(error);
 	  });
 	// }
  //  });
@@ -83,11 +89,15 @@ function insertDate(userName, dataName, data) {
 function read(tableName, callback) {
 	// con.connect(function(err) {
 	//   	if(err) {console.log(err);} else {
-			  con.query(`SELECT * FROM ${tableName} ORDER BY time DESC`, function (err, result, fields) {
-			    if (err) throw err;
-			    // console.log(time.toLocaleString());
-			    callback(result);
-			  });
+		var error = null;
+		con.query(`SELECT * FROM ${tableName} ORDER BY time DESC`, function (err, result, fields) {
+		    if (err) {
+	    	console.log(err);
+	    	error = err;
+	    }
+		    // console.log(time.toLocaleString());
+		    callback(err, result);
+		});
 		// 	}
 		// });
 	// con.end();

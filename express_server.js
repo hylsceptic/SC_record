@@ -54,7 +54,7 @@ app.get('/test', (req, res) => {
 app.post('/register', (req, res) => {
   form = new multiparty.Form();
   form.parse(req, function(err, fields, files) {
-    try{
+    if(err) {console.log("Parse error:", err)} else {
       var userHash = fields.userHash[0];
       var userName = fields.userName[0];
       var address = fields.address[0];
@@ -66,18 +66,19 @@ app.post('/register', (req, res) => {
           // console.log(result);
           res.write(result.transactionHash);
           res.end();
-          myDb.insertUser(userName, userHash, address);
+          myDb.insertUser(userName, userHash, address, (err) => {
+            if(err) console.log("DB error: ", err);
+          });
         }
       });
     }
-    catch(err1) {console.log(err1);}
   });
 });
 
 app.post('/write', (req, res) => {
   form = new multiparty.Form();
   form.parse(req, function(err, fields, files) {
-    try{
+    if(err) {console.log("Parse error:", err)} else {
       var userHash = fields.userHash[0];
       var userName = fields.userName[0];
       var dataName = fields.dataName[0];
@@ -92,23 +93,24 @@ app.post('/write', (req, res) => {
         } else {
           res.write(result.transactionHash);
           res.end();
-          myDb.insertDate(userName, dataName, data);
+          myDb.insertDate(userName, dataName, data, (err) => {
+            if(err) console.log("DB error: ", err);
+          });
         }
       });
     }
-    catch(err1) {console.log(err1);}
   });
 });
 
 app.post('/confirm', (req, res) => {
   form = new multiparty.Form();
   form.parse(req, function(err, fields, files) {
-    try{
+    if(err) {console.log("Parse error:", err)} else {
       var drafter = fields.drafter[0];
       var confirmer = fields.confirmer[0];
       var dataName = fields.dataName[0];
       var signature = JSON.parse(fields.signature[0]);
-      confirm(confirmer, drafter, dataName, signature, function(result){
+      confirm(confirmer, drafter, dataName, signature, function(err, result){
         if(result == 'err') {
           res.write("error");
           res.end();
@@ -118,14 +120,13 @@ app.post('/confirm', (req, res) => {
         }
       });
     }
-    catch(err1) {console.log(err1);}
   });
 });
 
 app.post('/witness', (req, res) => {
     form = new multiparty.Form();
     form.parse(req, function(err, fields, files) {
-      try{
+    if(err) {console.log("Parse error:", err)} else {
         var drafter = fields.drafter[0];
         var confirmer = fields.confirmer[0];
         var dataName = fields.dataName[0];
@@ -141,7 +142,6 @@ app.post('/witness', (req, res) => {
           }
         });
       }
-      catch(err1) {console.log(err1);}
     }
   );
 });
@@ -149,7 +149,7 @@ app.post('/witness', (req, res) => {
 app.post('/cgpwd', (req, res) => {
   form = new multiparty.Form();
   form.parse(req, function(err, fields, files) {
-    try{
+    if(err) {console.log("Parse error:", err)} else {
       var user = fields.user[0];
       var address = fields.address[0];
       var signature = JSON.parse(fields.signature[0]);
@@ -164,14 +164,18 @@ app.post('/cgpwd', (req, res) => {
         }
       });
     }
-    catch(err1) {console.log(err1);}
   });
 });
 
 app.get('/newData', (req, res) => {
-  myDb.read('datas', (result) => {
-    res.write(JSON.stringify(result));
-    res.end();
+  myDb.read('datas', (err, result) => {
+    if (err) {
+      res.write("error");
+      res.end();
+    } else {
+      res.write(JSON.stringify(result));
+      res.end();
+    }
   });
 });
 
@@ -179,7 +183,7 @@ app.post('/ipfs', (req, res) => {
   form = new multiparty.Form();
   form.maxFieldsSize = 110485760;
   form.parse(req, function(err, fields, files) {
-    try{
+    if(err) {console.log("Parse error:", err)} else {
       var data = JSON.parse(fields.data[0]);
       ipfs.files.add(Buffer.from(data), function(err, result) {
         if(err != null) {
@@ -194,7 +198,6 @@ app.post('/ipfs', (req, res) => {
         }
       });
     }
-    catch(err1) {console.log(err1);}
   }); 
 });
 

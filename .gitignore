@@ -4,3 +4,5 @@ node_modules/*
 package-lock.json
 js-ipfs/*
 ./ethernaut.js
+./db.js
+./test.js
