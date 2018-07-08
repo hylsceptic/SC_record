@@ -39,3 +39,16 @@ function sign(msg, pk) {
 	var v = '0x' + signature.slice(128, 130);
 	return	{v: v, r: r, s: s};
 }
+
+
+function request(method, url, formData, callback) {
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			callback(data);
+		}
+	};
+	xhttp.open(method, url, true);
+	if(formData == null) xhttp.send();
+	else xhttp.send(formData);
+}

@@ -38,14 +38,16 @@
 	}
    	var user;
    	var login;
-    if('passwd' in window.localStorage) {
+    if('passwd' in window.localStorage && window.localStorage.getItem('passwd') != null) {
     	user = window.localStorage.getItem('userName');
     	login = "退出登录";
 
     	try {
+    		$(".userName").hide();
     		$(".password").hide();
     		console.log(window.localStorage.getItem('passwd'));
     		$(".passwdVal").attr("value", window.localStorage.getItem('passwd'));
+    		$(".user").attr("value", window.localStorage.getItem('userName'));
     	}
     	catch(err) {console.log(33123);};
     } else {

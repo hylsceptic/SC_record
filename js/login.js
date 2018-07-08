@@ -37,9 +37,10 @@ document.getElementById("register").onclick = function search() {
 				if(data=="error") {
 					text.innerHTML = "注册失败，用户名是否已注册。";
 				} else {
-					text.innerHTML = "注册成功。";
 					window.localStorage.setItem('userName', userName);
 					window.localStorage.setItem('passwd', password);
+					var formData = new FormData();
+					window.location.href='index.html';
 				}
 			}
 		};
@@ -48,9 +49,14 @@ document.getElementById("register").onclick = function search() {
 	} else {
 		myContract.methods.register(userNameHash, accounts.address).send({from: account})
 		.on('receipt', function(receipt) {
-			text.innerHTML = "注册成功。";
 			window.localStorage.setItem('userName', userName);
 			window.localStorage.setItem('passwd', password);
+			var formData = new FormData();
+			formData.append('userName', userName);
+			formData.append('userHash', userNameHash);
+			formData.append('address', accounts.address);
+			request('POST', 'api/addUser', formData, (result) => {console.log(result);});
+			window.location.href='index.html';
 		})
 		.on('error', function(error) {
 			text.innerHTML = "注册失败，用户名是否已注册。";
@@ -87,17 +93,4 @@ document.getElementById("login").onclick = function search() {
 	};
 	xhttp.open('POST', 'api/getUser', true);
 	xhttp.send(formData);
-	// console.log(userNameHash);
-	// text.innerHTML = "等待转账确认...";
-	// var server = document.getElementById('server');
-	// if(server.checked) {
-	// } else {
-	// 	myContract.methods.register(userNameHash, accounts.address).send({from: account})
-	// 	.on('receipt', function(receipt) {
-	// 		text.innerHTML = "注册成功。";
-	// 	})
-	// 	.on('error', function(error) {
-	// 		text.innerHTML = "注册失败，用户名是否已注册。";
-	// 	});
-	// }
 };

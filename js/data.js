@@ -160,6 +160,11 @@ function writeData(userName, passwd, dataName, data) {
 		userNameHash, localWeb3.utils.sha3(dataName), data, signature.v, signature.r, signature.s)
 	.send({from: account, gas: 1000000})
 	.on('receipt', function(receipt){
+		var formData = new FormData();
+		formData.append('userName', userName);
+		formData.append('dataName', dataName);
+		formData.append('data', JSON.stringify(data));
+		request('POST', 'api/addData', formData, (result) => {});
 	    text.innerHTML = "数据写入成功。";
 	    })
 	.on('error', function(error) {text.innerHTML = "数据写入失败，用户名、密码错误，或数据名重复...";});

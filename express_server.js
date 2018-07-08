@@ -49,7 +49,7 @@ app.get('/css/:id', (req, res) => {
 
 app.get('/test', (req, res) => {
   res.send('test');
-})
+});
 
 app.post('/register', (req, res) => {
   form = new multiparty.Form();
@@ -75,6 +75,22 @@ app.post('/register', (req, res) => {
   });
 });
 
+app.post('/api/addUser', (req, res) => {
+  form = new multiparty.Form();
+  form.parse(req, function(err, fields, files) {
+    if(err) {console.log("Parse error:", err);} else {
+      var userHash = fields.userHash[0];
+      var userName = fields.userName[0];
+      var address = fields.address[0];
+      myDb.insertUser(userName, userHash, address, (err) => {
+        if(err) console.log("DB error: ", err);
+        res.write(JSON.stringify(err));
+        res.end();
+      });
+    }
+  });
+});
+
 app.post('/write', (req, res) => {
   form = new multiparty.Form();
   form.parse(req, function(err, fields, files) {
@@ -93,10 +109,27 @@ app.post('/write', (req, res) => {
         } else {
           res.write(result.transactionHash);
           res.end();
-          myDb.insertDate(userName, dataName, data, (err) => {
+          myDb.insertData(userName, dataName, data, (err) => {
             if(err) console.log("DB error: ", err);
           });
         }
+      });
+    }
+  });
+});
+
+
+app.post('/api/addData', (req, res) => {
+  form = new multiparty.Form();
+  form.parse(req, function(err, fields, files) {
+    if(err) {console.log("Parse error:", err)} else {
+      var userName = fields.userName[0];
+      var dataName = fields.dataName[0];
+      var data = JSON.parse(fields.data[0]);
+      myDb.insertData(userName, dataName, data, (err) => {
+        if(err) console.log("DB error: ", err);
+        res.write(JSON.stringify(err));
+        res.end();
       });
     }
   });
