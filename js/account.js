@@ -5,50 +5,6 @@ var localWeb3;
 
 window.addEventListener('load', init());
 
-document.getElementById("register").onclick = function search() {
-	var text = document.getElementById("registerresult");
-	var userName = document.getElementById("username1").value;
-	var password = document.getElementById("password1").value;
-	var password1 = document.getElementById("password1r").value;
-	if(password != password1) {
-		text.innerHTML = "密码不一致...";
-		return 0;
-	}
-	pk = localWeb3.utils.sha3(password);
-	userNameHash = localWeb3.utils.sha3(userName);
-	accounts = localWeb3.eth.accounts.privateKeyToAccount(pk);
-	console.log(userNameHash);
-	text.innerHTML = "等待转账确认...";
-	var server = document.getElementById('server');
-	if(server.checked) {
-		var formData = new FormData();
-		formData.append('userName', userName);
-		formData.append('userHash', userNameHash);
-		formData.append('address', accounts.address);
-		var xhttp = new XMLHttpRequest();
-		xhttp.onreadystatechange = function() {
-			if (this.readyState == 4 && this.status == 200) {
-				data = this.responseText;
-				console.log(data);
-				if(data=="error") {
-					text.innerHTML = "注册失败，用户名是否已注册。";
-				} else {
-					text.innerHTML = "注册成功。";
-				}
-			}
-		};
-		xhttp.open('POST', 'register', true);
-		xhttp.send(formData);
-	} else {
-		myContract.methods.register(userNameHash, accounts.address).send({from: account})
-		.on('receipt', function(receipt) {
-			text.innerHTML = "注册成功。";
-		})
-		.on('error', function(error) {
-			text.innerHTML = "注册失败，用户名是否已注册。";
-		});
-	}
-};
 
 document.getElementById("cgpwd").onclick = function search() {
 	var text = document.getElementById("cgpwdresult");

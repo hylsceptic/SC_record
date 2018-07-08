@@ -102,6 +102,27 @@ app.post('/write', (req, res) => {
   });
 });
 
+
+app.post('/api/getUser', (req, res) => {
+  form = new multiparty.Form();
+  form.parse(req, function(err, fields, files) {
+    if(err) {console.log("Parse error:", err)} else {
+      var userName = fields.userName[0];
+      myDb.getUser(userName, (err, result) => {
+        if(err) {
+          console.log("DB error: ", err);
+          res.write("error");
+          res.end();
+        } else {
+          res.write(JSON.stringify(result));
+          res.end();
+        }
+      });
+    }
+  });
+});
+
+
 app.post('/confirm', (req, res) => {
   form = new multiparty.Form();
   form.parse(req, function(err, fields, files) {

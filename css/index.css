@@ -38,10 +38,10 @@ body {
 }
 .footer{
 	font-size: 12px;
-height: 100px;
-width: 100%;
-position: fixed;
-bottom: 0;
+	height: 100px;
+	width: 100%;
+	position: fixed;
+	bottom: 0;
 }
 .fotter-inside {
 	text-align: center;
@@ -50,3 +50,11 @@ bottom: 0;
 #profile {
 	width: 200px;
 }
+
+.navbar {
+    list-style-type: none;
+}
+
+/*.password {
+	display: none;
+}*/

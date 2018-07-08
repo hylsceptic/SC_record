@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+  <html>
+    <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <link rel="stylesheet" type="text/css" href="./css/index.css">
+    </head>
+    <body>
+      <ul id="Manu">
+      </ul>
+
+      <div class="body-main">
+        <h2>登录:</h2>
+        <p>为方便记入数据以及查询数据，每个人首先请注册用户，信息完全存储在智能合约上。</p>
+        <h3 id="warning"></h3>
+        User name: <input id="username1" type="text" name="UserName" value="" placeholder="Enter user name"><br>
+        Password:  <input id="password1" type="password" name="Password" value="" placeholder="Enter password">
+        <p id="loginresult" class="prompt"></p>
+        <button id="login">login</button><br>
+
+        <h2>注册:</h2>
+        <p>为方便记入数据以及查询数据，每个人首先请注册用户，信息完全存储在智能合约上。</p>
+        <h3 id="warning"></h3>
+        User name: <input id="username2" type="text" name="UserName" value="" placeholder="Enter user name"><br>
+        Password:  <input id="password2" type="password" name="Password" value="" placeholder="Enter password"><br>
+        Reenter :  <input id="password2r" type="password" name="Password" value="" placeholder="Repeat password"><br/>
+        <p id="registerresult" class="prompt"></p>
+        <button id="register">Register</button><br>
+        <input type="checkbox" id="server" value="">服务器<br>
+        
+      </div>
+    </body>
+    <dv class="footer">
+      <p class="fotter-inside">Support: thesceptic@126.com</p>
+      <p class="fotter-inside">Donation:</p>
+      <p class="fotter-inside">BTC: 1M7j4kbteRbk9d2yVLJDGsUD1Vos4xsZP1</p>
+      <p class="fotter-inside">ETH: 0xf4095b4118850d6db0cecc95ab54d016d9e60e00</p>
+    </dv>
+    <!-- <script src="./js/ethereumjs-util.js"></script> -->
+    <script src="./js/showData.js"></script>
+    <script type="text/javascript" src="./js/abi.json"></script>
+    <script type="text/javascript" src="./js/utils.js"></script>
+    <script src="./js/web3.min.js"></script>
+    <script src="./js/login.js"></script>
+
+  </html>

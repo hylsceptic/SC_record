@@ -6,12 +6,6 @@
     </head>
     <body>
       <ul id="Manu">
-        <a href="index.html" class="Item">主页</a>
-        <a href="account.html" class="Item">用户信息</a>
-        <a href="data.html" class="Item">存储数据</a>
-        <a href="viewdata.html" class="Item">查看数据</a>
-        <a href="visiter.html" class="Item">游客模式</a>
-        <a href="test.html" class="Item">测试模块</a>
       </ul>
       <div class="body-main">
         <div id="ipfsprompt"><p></p></div>
@@ -26,7 +20,9 @@
         <div class="figresult"></div>
         <h3>写入图片</h3>
         User name: <input id="username1" type="text" placeholder="Enter user name">
-        Password:  <input id="password1" type="password" placeholder="Enter password">
+        <span class="password">          
+          Password:  <input class="passwdVal" id="password1" type="password" placeholder="Enter password">
+        </span>
         Data name: <input id="name1" type="text" placeholder="Enter data name"><br/>
         <div id="writeresult1">
           
@@ -43,7 +39,9 @@
         <br/>
         <h3>写入文件</h3>
         User name: <input id="username2" type="text" placeholder="Enter user name">
-        Password:  <input id="password2" type="password" placeholder="Enter password">
+        <span class="password">
+          Password:  <input class="passwdVal" id="password2" type="password" placeholder="Enter password">
+        </span>
         Data name: <input id="name2" type="text" placeholder="Enter data name"><br/>
         <button id="write2">Write</button><br>
         <div id="writeresult2"></div><br><br>
@@ -58,6 +56,8 @@
       <p class="fotter-inside">ETH: 0xf4095b4118850d6db0cecc95ab54d016d9e60e00</p>
     </dv> -->
 
+    <script src="./js/jquery-3.3.1.min.js"></script>
+    <script src="./js/showData.js"></script>
     <script type="text/javascript" src="./js/abi.json"></script>
     <script type="text/javascript" src="./js/utils.js"></script>
     <script src="./js/web3.min.js"></script>

@@ -6,17 +6,14 @@
     </head>
     <body>
       <ul id="Manu">
-        <a href="index.html" class="Item">主页</a>
-        <a href="account.html" class="Item">用户信息</a>
-        <a href="data.html" class="Item">存储数据</a>
-        <a href="viewdata.html" class="Item">查看数据</a>
-        <a href="visiter.html" class="Item">游客模式</a>
       </ul>
       <div class="body-main">
         <h2>Write data:</h2>
         <p>写入数据，请提供用户名，密码，数据名以及数据内容。</p>
         User name: <input id="username2" type="text" name="UserName" value="" placeholder="Enter user name">
-        Password:  <input id="password2" type="password" name="Password" value="" placeholder="Enter password">
+        <span class="password">
+          Password:  <input class="passwdVal" id="password2" type="password" name="Password" value="" placeholder="Enter password">
+        </span>
         Data name: <input id="name2" type="text" name="Password" value="" placeholder="Enter data name"><br/>
         Data: <br>
         <textarea id="data" rows="6" cols="40"></textarea><br/>
@@ -26,7 +23,9 @@
         <h2>Confirm data:</h2>
         <p>请提供您的用户名与密码，以及您想要确认的用户及数据。</p>
         Your name: <input id="comfirmer" type="text" name="UserName" value="" placeholder="Enter user name">
-        Your password: <input id="comfirmer-passwd" type="password" name="Password" value="" placeholder="Enter password">
+        <span class="password">
+          Your password: <input class="passwdVal" id="comfirmer-passwd" type="password" name="Password" value="" placeholder="Enter password">
+        </span>
         User name: <input id="drafter" type="text" name="UserName" value="" placeholder="Enter user name">
         Data name: <input id="comfirm-dataName" type="text" name="Password" value="" placeholder="Enter data name"><br/>
         <p id="comfirmresult" class="prompt"></p>
@@ -35,7 +34,9 @@
         <h2>Witness data:</h2>
         <p>请提供您的用户名与密码，以及您想要确认的用户及数据及确认人。</p>
         Your name: <input id="eyewitness" type="text" name="UserName" value="" placeholder="Enter user name">
-        Your password: <input id="eyewitness-passwd" type="password" name="Password" value="" placeholder="Enter password">
+        <span class="password">
+          Your password: <input class="passwdVal" id="eyewitness-passwd" type="password" name="Password" value="" placeholder="Enter password">
+        </span>
         User name: <input id="drafterofwitness" type="text" name="UserName" value="" placeholder="Enter user name">
         Data name: <input id="eyewitness-dataName" type="text" name="Password" value="" placeholder="Enter  data name">
         Confirmer: <input id="confirmerofwitness" type="text" name="Password" value="" placeholder="Enter confirmer"><br/>
@@ -50,7 +51,8 @@
       <p class="fotter-inside">BTC: 1M7j4kbteRbk9d2yVLJDGsUD1Vos4xsZP1</p>
       <p class="fotter-inside">ETH: 0xf4095b4118850d6db0cecc95ab54d016d9e60e00</p>
     </dv> -->
-    <!-- <script src="./js/ethereumjs-util.js"></script> -->
+    <script src="./js/jquery-3.3.1.min.js"></script>
+    <script src="./js/showData.js"></script>
     <script type="text/javascript" src="./js/abi.json"></script>
     <script type="text/javascript" src="./js/utils.js"></script>
     <script src="./js/web3.min.js"></script>
